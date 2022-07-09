@@ -14,21 +14,31 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('categoreyfoods.index')" :active="request()->routeIs('categoreyfoods')">
+                        {{ __('CategoreyFood') }}
+                    </x-nav-link>
 
                     <x-nav-link :href="route('addresses.index')" :active="request()->routeIs('addresses.index')">
                         {{ __('Address') }}
                     </x-nav-link>
 
-                    @can('posts.index')
+                    <x-nav-link :href="route('foods.index')" :active="request()->routeIs('foods.index')">
+                        {{ __('food') }}
+                    </x-nav-link>
+
+
+
+                    {{-- @can('posts.index') --}}
 
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{ __('posts') }}
                     </x-nav-link>
-                    @endcan
+                    {{-- @endcan --}}
 
                     <x-nav-link :href="route('info')" :active="request()->routeIs('info')">
                         {{ __('info') }}
                     </x-nav-link>
+
 
 
                 </div>

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorefoodRequest;
 use App\Http\Requests\UpdatefoodRequest;
-use App\Models\food;
+use App\Models\Food;
+use Illuminate\Support\Facades\Gate;
 
 class FoodController extends Controller
 {
@@ -15,7 +16,20 @@ class FoodController extends Controller
      */
     public function index()
     {
-        return view('foods.index')->with;
+
+        if (auth()->user()->role == 'admin') {
+
+            $foods = Food::paginate();
+
+            // return $posts;
+
+            return view('foods.index', ['foods' => $foods]);
+        }
+        //gate for front @can
+        if (Gate::allows('posts.index')) {
+            $foods = auth()->user()->food()->paginate();
+            return view('posts.index', ['posts' => $foods]);
+        }
     }
 
     /**
@@ -25,7 +39,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('foods.create');
     }
 
     /**
@@ -36,7 +50,9 @@ class FoodController extends Controller
      */
     public function store(StorefoodRequest $request)
     {
-        //
+        $credential = $request->validated();
+        auth()->user()->food()->create($credential);
+        return redirect()->route('foods.index');
     }
 
     /**
@@ -47,7 +63,7 @@ class FoodController extends Controller
      */
     public function show(food $food)
     {
-        //
+        return view('foods.show', compact('food'));
     }
 
     /**
@@ -58,7 +74,9 @@ class FoodController extends Controller
      */
     public function edit(food $food)
     {
-        //
+        if (auth()->user()->id == $food->user_id || auth()->user()->role = 'admin')
+            return view('foods.edit', compact('food'));
+        return  abort('404');
     }
 
     /**
@@ -70,7 +88,11 @@ class FoodController extends Controller
      */
     public function update(UpdatefoodRequest $request, food $food)
     {
-        //
+        if (auth()->user()->id == $food->user_id || auth()->user()->role == 'admin')
+        $credential=$request->validated();
+        $food->update($credential);
+            return redirect()->route('foods.index');
+        return abort('404');
     }
 
     /**
@@ -81,6 +103,7 @@ class FoodController extends Controller
      */
     public function destroy(food $food)
     {
-        //
+        $food->delete();
+        return redirect()->route('foods.index');
     }
 }

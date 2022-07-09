@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
+use App\Http\Resources\UserResource;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -24,7 +28,11 @@ class PostController extends Controller
     {
 
         if (auth()->user()->role == 'admin') {
+
             $posts = Post::paginate();
+            $users = User::all() ;
+            // return $posts;
+
             return view('posts.index', ['posts' => $posts]);
         }
 

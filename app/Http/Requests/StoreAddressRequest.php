@@ -24,8 +24,8 @@ class StoreAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'latitude'=> ' bail|required|numeric|min:1|max:6',
-            'longitude'=> ' bail|required|numeric|min:1|max:6',
+            'latitude'=> ' bail|required|numeric|min:1|',
+            'longitude'=> ' bail|required|numeric|min:1|',
         ];
     }
 }

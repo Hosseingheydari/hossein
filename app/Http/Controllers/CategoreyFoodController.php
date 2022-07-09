@@ -15,7 +15,8 @@ class CategoreyFoodController extends Controller
      */
     public function index()
     {
-        //
+        $categoreyFoods = CategoreyFood::all() ;
+        return view('categoreyfoods.index',compact('categoreyFoods'));
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoreyFoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('categoreyfoods.create');
     }
 
     /**
@@ -36,7 +37,11 @@ class CategoreyFoodController extends Controller
      */
     public function store(StoreCategoreyFoodRequest $request)
     {
-        //
+
+        $credential = $request->validated();
+        auth()->user()->food()->create($credential);
+        return redirect()->route('categoreyfoods.index');
+
     }
 
     /**

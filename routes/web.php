@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CategoreyFoodController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\PostController;
 use App\Models\Post;
 use Illuminate\Http\Request as HttpRequest;
@@ -27,10 +29,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+
 Route::resource('addresses', AddressController::class)
 ->middleware(['auth']);
 
-Route::resource('foods', AddressController::class)
+
+Route::resource('categoreyfoods', CategoreyFoodController::class)
+->middleware(['auth']);
+
+Route::resource('foods', FoodController::class)
 ->middleware(['auth']);
 
 Route::get('info', function () {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Food extends Model
 {
     use HasFactory;
-    protected $fillable = ['food_name','primary_img','decription','weight','price','user_id',''];
+    protected $fillable = ['food_name','primary_img','decription','weight','price','user_id','categorey_food_id',];
 
     public function user()
     {
@@ -22,7 +22,7 @@ class Food extends Model
 
     public function categoreyFood()
     {
-        return $this->hasOne(CategoreyRestaurant::class);
+        return $this->belongsTo(CategoreyFood::class);
     }
 
 }

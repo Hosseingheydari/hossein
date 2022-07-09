@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\CategoreyFoodSeeder ;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,10 +31,15 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Post::factory(3)->create(['user_id']);
 
         // \App\Models\User::create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        //     'password'=>'12345678'
+        //     'name' => 'hossein',
+        //     'email' => 'h.gheydarii@yahoo.com',
+        //     'password'=>bcrypt('12345678'),
+        //     'role'=>'admin',
         // ]);
+        \App\Models\CategoreyFood::create([
+
+            'cat_food'=>'pitza',
+        ]);
     // $this->call([CategoreyFoodSeeder::class]);
     // \App\Models\User::factory()->haspost([
 
@@ -43,9 +49,10 @@ class DatabaseSeeder extends Seeder
     //     'status'=>'draft',
     // ])->create();
 
-    \App\Models\Post::factory()->create([
-        'user_id' => 1,
-    ]);
-    User::factory()->count(2)->has(Post::factory()->count(3))->create();
+    // \App\Models\Post::factory()->create([
+    //     'user_id' => 1,
+    // ]);
+    // User::factory()->count(2)->has(Post::factory()->count(3))->create();
+
 }
 }

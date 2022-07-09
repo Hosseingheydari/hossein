@@ -13,5 +13,9 @@ class CategoreyFood extends Model
     {
         return $this->hasOne(User::class);
     }
+    public function food()
+    {
+        return $this->hasMany(Food::class) ;
+    }
 
 }

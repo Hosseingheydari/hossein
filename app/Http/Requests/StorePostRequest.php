@@ -30,5 +30,12 @@ class StorePostRequest extends FormRequest
             'status'=>'in:draft,published'
 
         ];
+
+    }
+    public function messages()
+    {
+        return [
+        'title.min'=>"this is very shoooooort",
+        ];
     }
 }

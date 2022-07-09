@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('price');
             $table->softDeletes();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(CategoreyFood::class);
+            $table->foreignIdFor(CategoreyFood::class)->nullable();
             $table->foreignIdFor(Order::class)->nullable();
 
                });

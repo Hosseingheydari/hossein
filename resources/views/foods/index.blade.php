@@ -16,7 +16,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <table>
                         <thead class="text-xs text-gray-700 uppercase bg-purple-50 dark:bg-gray-700 dark:text-gray-400">
-                            <th scope="col" class="px-6 py-3">{{ __('') }}</th>
+                            <th scope="col" class="px-6 py-3">{{ __('name') }}</th>
                             <th scope="col" class="px-6 py-3"> {{ __('food_name') }}</th>
                             <th scope="col" class="px-6 py-3">{{ __('primary_img') }}</th>
                             <th scope="col" class="px-6 py-3">{{ __('description') }}</th>
@@ -27,7 +27,7 @@
 
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
+                            @foreach ($foods as $food)
                                 <tr class="bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="px-6 py-4">{{ $food->food_name }}</td>
                                     <td class="px-6 py-4">{{ $food->primary_img }}</td>
@@ -53,7 +53,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach ($posts as $post )
+                            @endforeach ()
                             {{ $foods->links() }}
                         </tbody>
                     </table>
