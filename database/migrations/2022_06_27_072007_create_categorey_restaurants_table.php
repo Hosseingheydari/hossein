@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
             $table->foreignIdFor(User::class);
-            $table->enum('cat_restaurant',['coffee','restaraunt','fastfood','superi']);
+            
             $table->string('acount_number');
             $table->string('phone_number');
         });

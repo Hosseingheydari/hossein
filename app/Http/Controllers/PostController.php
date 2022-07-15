@@ -26,10 +26,13 @@ class PostController extends Controller
     //  }
     public function index()
     {
-
+        $user=User::all() ;
+        return $user = UserResource::collection($user);
         if (auth()->user()->role == 'admin') {
 
-            $posts = Post::paginate();
+            // $posts = Post::paginate();
+            $post=Post::with('user:name,id')->get();
+            return $post;
             $users = User::all() ;
             // return $posts;
 

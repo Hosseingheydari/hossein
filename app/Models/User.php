@@ -12,8 +12,10 @@ use App\Models\CategoreyFood;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
+
+    use HasApiTokens, HasFactory, Notifiable;
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+
     ];
 
     /**
@@ -48,32 +51,39 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class)->latest();
     }
-    public function food()
-    {
-        return $this->hasMany(Food::class);
-    }
+    // user should not have any food
+    // public function food()
+    // {
+    //     return $this->hasMany(Food::class);
+    // }
 
-    public function categoreyRestaurant()
+    public function Restaurants()
     {
-        return $this->hasOne(CategoreyRestaurant::class);
+        return $this->hasMany(CategoreyRestaurant::class);
     }
-
-    public function categoreyFoods()
-    {
-        return $this->hasMany(CategoreyFood::class);
-    }
+    // thats false
+    // public function categoreyFoods()
+    // {
+    //     return $this->hasMany(CategoreyFood::class);
+    // }
     public function addresses()
     {
         return $this->hasMany(Address::class);
     }
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
-
-    public function decryptpassword()
+    public function toCategoreyFood()
     {
-        return decrypt($this->attributes['password']);
+        return $this->hasManyThrough(CategoreyFood::class,CategoreyRestaurant::class);
     }
+    public function tofood()
+
+    {
+        return $this->hasManyDeep(Food::class ,[CategoreyRestaurant::class ,CategoreyFood::class]);
+    }
+
+
 }

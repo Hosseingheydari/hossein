@@ -4,25 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Food extends Model
 {
-    use HasFactory;
-    protected $fillable = ['food_name','primary_img','decription','weight','price','user_id','categorey_food_id',];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    use HasFactory;
+    // protected $table = 'food';
+    protected $fillable = ['food_name','primary_img','decription','weight','price','order_id','categorey_food_id',];
+    // thats false
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class,'user_id');
+    // }
+
 
     public function order()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasOne(Order::class);
     }
 
-    public function categoreyFood()
+    public function categorey()
     {
-        return $this->belongsTo(CategoreyFood::class);
+        return $this->belongsTo(CategoreyFood::class,'categorey_food_id','');
     }
-
 }

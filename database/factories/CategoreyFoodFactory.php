@@ -17,7 +17,8 @@ class CategoreyFoodFactory extends Factory
     public function definition()
     {
         return [
-            'cat_food'=>$this->faker->randomElement(['pitza','sokhari','berger','chelokabab'])
+            'cat_food'=>$this->faker->word()
+
         ];
     }
 }

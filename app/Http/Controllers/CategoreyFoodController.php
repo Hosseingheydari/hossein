@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoreyFoodRequest;
 use App\Http\Requests\UpdateCategoreyFoodRequest;
 use App\Models\CategoreyFood;
+use App\Models\CategoreyRestaurant;
+use App\Models\User;
 
 class CategoreyFoodController extends Controller
 {
@@ -15,8 +17,10 @@ class CategoreyFoodController extends Controller
      */
     public function index()
     {
-        $categoreyFoods = CategoreyFood::all() ;
-        return view('categoreyfoods.index',compact('categoreyFoods'));
+
+
+        $categoreyFoods = CategoreyFood::all();
+        return view('categoreyfoods.index', compact('categoreyFoods'));
     }
 
     /**
@@ -39,9 +43,8 @@ class CategoreyFoodController extends Controller
     {
 
         $credential = $request->validated();
-        auth()->user()->food()->create($credential);
+        CategoreyFood::create($credential);
         return redirect()->route('categoreyfoods.index');
-
     }
 
     /**

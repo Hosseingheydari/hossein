@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CategoreyRestaurant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,9 +15,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('categorey_food', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
-            $table->enum('cat_food',['chelokabab','sokhari','berger','pitza','sandwich','pasta','salad','jojekabab','chelogosht']);
+            $table->foreignIdFor(CategoreyRestaurant::class);
+            $table->string('cat_food');
+
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorey_food');
+        Schema::dropIfExists('cat');
     }
 };

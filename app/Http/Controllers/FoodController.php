@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorefoodRequest;
 use App\Http\Requests\UpdatefoodRequest;
+use App\Models\CategoreyFood;
+use App\Models\CategoreyRestaurant;
 use App\Models\Food;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodController extends Controller
 {
@@ -18,19 +23,48 @@ class FoodController extends Controller
     {
 
         if (auth()->user()->role == 'admin') {
-
             $foods = Food::paginate();
-
-            // return $posts;
-
             return view('foods.index', ['foods' => $foods]);
         }
-        //gate for front @can
-        if (Gate::allows('posts.index')) {
-            $foods = auth()->user()->food()->paginate();
-            return view('posts.index', ['posts' => $foods]);
-        }
+        $user = User::with('tofood')->find(auth()->user()->id);
+        $foods = $user->tofood;
+        return view('foods.index', compact('foods'));
+
+
+        //sohrabi user auth
+        // return User::with('categoreyRestaurants.categoreyFood')->find(auth()->user()->id);
+        //sohrabi for food
+        // return $foods = Food::with('categorey.categoreyRestaurant.user')->get();
+        // foreach($foods as $food){dd($food->categorey->categoreyRestaurant->user->name); }
+        //gheydari by composer(belongs to through)
+        // return CategoreyFood::with('toUser')->get() ;
+        //saeedy :
+        // return Food::with(['categorey'=>fn($categoreyFood)=>$categoreyFood->with(['categoreyRestaurant'=>fn($categoreyRestaurant)=>$categoreyRestaurant->where('user_id',auth()->id())])])->get();}
+
+
+
     }
+
+
+
+    //gate for front @can
+    // return Food::with('categorey')->get();
+    //  $cat=auth()->user()->categoreyRestaurants() ;
+    //   $pat=$cat->cat()->get();
+    //   return $pat;
+
+    // return Food::with('categoreyFood.categoreyRestaurant.user')->where('user_id',auth()->id())->get();
+    // return  $foods = CategoreyRestaurant::where('user_id', auth()->id())->with('categoreyFoods.foods')->get();
+
+
+    //   return  $foods = CategoreyRestaurant::where('user_id',auth()->id())->with([
+
+    // 'categoreyFoods'=>fn($categoreyFood)=>$categoreyFood->with('foods')
+    //   ])->get() ;
+    // return view('posts.index', ['foods' => $foods]);
+    // return CategoreyFood::with('toUser')->get();
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +73,8 @@ class FoodController extends Controller
      */
     public function create()
     {
-        return view('foods.create');
+        $categoreyFoods = CategoreyFood::all();
+        return view('foods.create', compact('categoreyFoods'));
     }
 
     /**
@@ -50,8 +85,9 @@ class FoodController extends Controller
      */
     public function store(StorefoodRequest $request)
     {
+        // $request->dd();
         $credential = $request->validated();
-        auth()->user()->food()->create($credential);
+        Food::create([$request]);
         return redirect()->route('foods.index');
     }
 
@@ -89,9 +125,9 @@ class FoodController extends Controller
     public function update(UpdatefoodRequest $request, food $food)
     {
         if (auth()->user()->id == $food->user_id || auth()->user()->role == 'admin')
-        $credential=$request->validated();
+            $credential = $request->validated();
         $food->update($credential);
-            return redirect()->route('foods.index');
+        return redirect()->route('foods.index');
         return abort('404');
     }
 

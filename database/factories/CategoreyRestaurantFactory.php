@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class CategoreyRestaurantFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=>$this->faker->name ,
+            'cat_restaurant'=>$this->faker->randomElement(['coffee','restaraunt','fastfood','superi']),
+            'acount_number' => str::random(5),
+            'phone_number'=> str::random(10) ,
         ];
     }
 }
