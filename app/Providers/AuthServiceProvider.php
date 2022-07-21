@@ -26,7 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('posts.index',function(User $user){
-            return auth()->user()->categoreyRestaurant() ==true;
+            return true ;
+            // return auth()->user()->categoreyRestaurant() ==true;
         });
 
 

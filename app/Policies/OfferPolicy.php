@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Restaurant;
+use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RestaurantPolicy
+class OfferPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,12 @@ class RestaurantPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Restaurant $restaurant)
+    public function view(User $user, Offer $offer)
     {
-        return $user->id == $restaurant->user_id ;
+
     }
 
     /**
@@ -41,43 +41,41 @@ class RestaurantPolicy
      */
     public function create(User $user)
     {
-        return ($user->id == auth()->id() && $user->restaurant == null ) ;
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Restaurant $restaurant)
+    public function update(User $user, Offer $offer)
     {
-        return $user->id == $restaurant->user_id ;
-
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Restaurant $restaurant)
+    public function delete(User $user, Offer $offer)
     {
-        return $user->id == $restaurant->user_id || $user->role == 'admin';
-
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Restaurant $restaurant)
+    public function restore(User $user, Offer $offer)
     {
         //
     }
@@ -86,11 +84,11 @@ class RestaurantPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Restaurant  $restaurant
+     * @param  \App\Models\Offer  $offer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Restaurant $restaurant)
+    public function forceDelete(User $user, Offer $offer)
     {
-        return true ;
+        //
     }
 }

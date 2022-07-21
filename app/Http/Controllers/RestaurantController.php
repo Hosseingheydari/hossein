@@ -12,10 +12,22 @@ class RestaurantController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
      */
+    public function __construct()
+    {
+            $this->authorizeResource(Restaurant::class, 'restaurant');
+
+    }
+
     public function index()
     {
-        //
+        if(auth()->user()->role =='admin'){
+            $restaurants = Restaurant::paginate() ;
+        return view('restaurants.index',compact('restaurants'));
+        }
+         $restaurants = auth()->user()->restaurant()->paginate();
+        return view('restaurants.index',compact('restaurants'));
     }
 
     /**
@@ -25,7 +37,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        //
+        return view('restaurants.create');
     }
 
     /**
@@ -36,7 +48,18 @@ class RestaurantController extends Controller
      */
     public function store(StoreRestaurantRequest $request)
     {
-        //
+        $credential = $request->validated();
+        Restaurant::create([
+
+
+            'name'=>$credential['name'],
+            'phone_number'=>$credential["phone_number"],
+            'account_number'=>$credential["account_number"],
+            'user_id'=>auth()->user()->id ,
+
+
+        ]);
+        return redirect()->route('restaurants.index') ;
     }
 
     /**
@@ -47,7 +70,7 @@ class RestaurantController extends Controller
      */
     public function show(Restaurant $restaurant)
     {
-        //
+        return $restaurant ;
     }
 
     /**
@@ -58,7 +81,7 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-        //
+        return view('restaurants.edit',compact('restaurant'));
     }
 
     /**
@@ -70,7 +93,8 @@ class RestaurantController extends Controller
      */
     public function update(UpdateRestaurantRequest $request, Restaurant $restaurant)
     {
-        //
+
+        return view('restaurants.index');
     }
 
     /**
@@ -81,6 +105,7 @@ class RestaurantController extends Controller
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+         $restaurant->delete();
+         return redirect()->route('restaurants.index') ;
     }
 }

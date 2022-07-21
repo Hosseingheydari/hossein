@@ -3,7 +3,9 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoreyFoodController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RestaurantController;
 use App\Models\Post;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +40,13 @@ Route::resource('addresses', AddressController::class)
 Route::resource('categoreyfoods', CategoreyFoodController::class)
 ->middleware(['auth']);
 
+Route::resource('restaurants', RestaurantController::class)
+->middleware(['auth']);
+
 Route::resource('foods', FoodController::class)
+->middleware(['auth']);
+
+Route::resource('offers', OfferController::class)
 ->middleware(['auth']);
 
 Route::get('info', function () {

@@ -7,10 +7,12 @@ use App\Http\Requests\UpdatefoodRequest;
 use App\Models\CategoreyFood;
 use App\Models\CategoreyRestaurant;
 use App\Models\Food;
+use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
@@ -22,12 +24,15 @@ class FoodController extends Controller
     public function index()
     {
 
+return (auth()->user()->role);
         if (auth()->user()->role == 'admin') {
-            $foods = Food::paginate();
+            $foods = Food::query()->with('offer')->latest()->paginate(5);
             return view('foods.index', ['foods' => $foods]);
         }
-        $user = User::with('tofood')->find(auth()->user()->id);
-        $foods = $user->tofood;
+        // using paginate in relation
+        // $foods = Food::with('offer')->get();
+    $foods=auth()->user()->tofood()->latest()->paginate();
+
         return view('foods.index', compact('foods'));
 
 
@@ -38,14 +43,12 @@ class FoodController extends Controller
         // foreach($foods as $food){dd($food->categorey->categoreyRestaurant->user->name); }
         //gheydari by composer(belongs to through)
         // return CategoreyFood::with('toUser')->get() ;
+        // $user = User::with('tofood')->find(auth()->user()->id);
+        // $foods = $user->tofood;
         //saeedy :
         // return Food::with(['categorey'=>fn($categoreyFood)=>$categoreyFood->with(['categoreyRestaurant'=>fn($categoreyRestaurant)=>$categoreyRestaurant->where('user_id',auth()->id())])])->get();}
 
-
-
     }
-
-
 
     //gate for front @can
     // return Food::with('categorey')->get();
@@ -73,8 +76,8 @@ class FoodController extends Controller
      */
     public function create()
     {
-        $categoreyFoods = CategoreyFood::all();
-        return view('foods.create', compact('categoreyFoods'));
+        $offers = Offer::all();
+        return view('foods.create', compact('offers'));
     }
 
     /**
@@ -85,9 +88,26 @@ class FoodController extends Controller
      */
     public function store(StorefoodRequest $request)
     {
-        // $request->dd();
         $credential = $request->validated();
-        Food::create([$request]);
+        $pathimage = Storage::disk($credential['storage'])->put('store', $credential['image']);
+        // dd($pathimage);
+        // $food=auth()->user()->tofood()->create($credential);
+        // $pathimage=$request->file('image')->store('store');
+        $food = Food::create([
+            'food_name' => $credential['food_name'],
+            'price' => $credential['price'],
+            // 'offer_price' => $credential['offer_price'],
+            // 'offer_percentage' => $credential['offer_percentage'],
+            'restaurant_id' => auth()->user()->restaurant->id,
+            'offer_id' => $credential['offer_id'],
+        ]);
+        if ($credential['storage'] == 's3')
+            $pathimage = "https://testhossein.s3.ir-thr-at1.arvanstorage.com/store/X2RdQ5qJ6BERAEnT8MylnORWB5v7hZEjujCe5YjK.png/$pathimage";
+
+        $food->update([
+            'primary_img' => $pathimage
+        ]);
+
         return redirect()->route('foods.index');
     }
 

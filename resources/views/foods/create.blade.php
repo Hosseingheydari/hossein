@@ -15,19 +15,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
-                    <form class="p-5" action="{{ route('foods.store') }}" method="post">
+                    <form class="p-5" action="{{ route('foods.store') }}" method="post"
+                        enctype="multipart/form-data">
 
                         @csrf
-                        <label for="cat_food" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an ategoreyFood</label>
-                        <select id="cat_food" name="categorey_food_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option  selected="">Choose Categorey Food</option>
-                            @foreach ($categoreyFoods as $categoreyFood)
+                        <label for="cat_food"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
+                            ategoreyFood</label>
 
-                                <option value="{{$categoreyFood->id}}">{{$categoreyFood->cat_food}}</option>
-                            @endforeach
-
-                        </select>
                         <div class="grid gap-6 mb-6 lg:grid-cols-2">
                             <div>
                                 <label for="food_name"
@@ -37,11 +32,13 @@
                                     placeholder="food_name" required="">
                             </div>
                             <div>
-                                <label for="primary_img"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">primary_img</label>
-                                <input type="text" name="primary_img" id="primary_img"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="primary_img" required="">
+
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    for="image">Upload file</label>
+                                <input type="file" name="image"
+                                    class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    id="image">
+
                             </div>
                             <div>
                                 <label for="primary_img"
@@ -58,6 +55,32 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     placeholder="description" required="">
                             </div>
+                            <div>
+                                <label for="offer_name"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an
+                                    offer</label>
+                                <select name="offer_id" id="offer_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected="">Choose one offer</option>
+                                    @foreach($offers as $offer)
+                                    <option value="{{$offer->id}}">{{$offer->offer_percentage}}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+
+                            <label for="storage"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select
+                                Storage</label>
+                            <select name="storage"id="storage"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option selected="">Choose One</option>
+                                <option value="local">local</option>
+                                <option value="public">public</option>
+                                <option value="s3">s3</option>
+
+                            </select>
 
                             <div>
                                 <label for="weight"

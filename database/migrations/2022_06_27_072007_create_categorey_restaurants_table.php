@@ -18,7 +18,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
-            $table->foreignIdFor(User::class);
             
             $table->string('acount_number');
             $table->string('phone_number');

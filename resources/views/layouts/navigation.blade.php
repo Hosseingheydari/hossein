@@ -14,8 +14,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('categoreyfoods.index')" :active="request()->routeIs('categoreyfoods')">
-                        {{ __('CategoreyFood') }}
+
+                    <x-nav-link :href="route('restaurants.index')" :active="request()->routeIs('restaurants')">
+                        {{ __('Restaurant') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('addresses.index')" :active="request()->routeIs('addresses.index')">
@@ -24,6 +25,14 @@
 
                     <x-nav-link :href="route('foods.index')" :active="request()->routeIs('foods.index')">
                         {{ __('food') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('offers.index')" :active="request()->routeIs('offers.index')">
+                        {{ __('offer') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('categoreyfoods.index')" :active="request()->routeIs('categoreyfoods')">
+                        {{ __('CategoreyFood') }}
                     </x-nav-link>
 
 

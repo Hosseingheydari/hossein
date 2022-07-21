@@ -13,7 +13,7 @@ class StoreRestaurantRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreRestaurantRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'required',
+            'phone_number'=>'required',
+            'account_number'=>'',
+            // 'user_id'=> 'unique:restaurants',// niyaz be policy nist//albate in ravesh javab nada
         ];
     }
 }

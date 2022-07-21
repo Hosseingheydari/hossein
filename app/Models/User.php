@@ -57,9 +57,9 @@ class User extends Authenticatable
     //     return $this->hasMany(Food::class);
     // }
 
-    public function Restaurants()
+    public function restaurant()
     {
-        return $this->hasMany(CategoreyRestaurant::class);
+        return $this->hasOne(Restaurant::class);
     }
     // thats false
     // public function categoreyFoods()
@@ -75,15 +75,15 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function toCategoreyFood()
-    {
-        return $this->hasManyThrough(CategoreyFood::class,CategoreyRestaurant::class);
-    }
     public function tofood()
-
     {
-        return $this->hasManyDeep(Food::class ,[CategoreyRestaurant::class ,CategoreyFood::class]);
+        return $this->hasManyThrough(Food::class,Restaurant::class);
     }
+    // public function tofood()
+
+    // {
+    //     return $this->hasManyDeep(Food::class ,[CategoreyRestaurant::class ,CategoreyFood::class]);
+    // }
 
 
 }

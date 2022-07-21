@@ -25,11 +25,17 @@ class StorefoodRequest extends FormRequest
     {
         return [
                 'food_name'=>'required|min:3|max:100' ,
-                'primary_img'=>'',
                 'description'=>'required',
                 'weight'=>'required',
                 'price'=>'required',
-                
+                'image'=>'image',
+                'storage'=>'required',
+                'offer_id'=>'nullable|integer',
+                'offer_price'=>'nullable',
+                'offer_percentage'=>'nullable',
+
+
+
         ];
     }
 }

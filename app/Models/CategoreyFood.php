@@ -17,15 +17,4 @@ class CategoreyFood extends Model
     {
         return $this->hasMany(Food::class) ;
     }
-    public function categoreyRestaurant()
-    {
-        return $this->belongsTo(CategoreyRestaurant::class,'categorey_restaurant_id');
-    }
-    public function toUser()
-    {
-        return $this->belongsToThrough(User::class,CategoreyRestaurant::class);
-    }
-    
-
-
 }

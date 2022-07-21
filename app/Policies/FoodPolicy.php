@@ -41,8 +41,8 @@ class FoodPolicy
      */
     public function create(User $user)
     {
-         return $food->user_id = auth()->user()->id || auth()->user()->role == 'admin';
-         
+         return $user->id = auth()->user()->id || auth()->user()->role == 'admin';
+
     }
 
     /**

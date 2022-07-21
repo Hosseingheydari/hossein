@@ -26,15 +26,11 @@ class PostController extends Controller
     //  }
     public function index()
     {
-        $user=User::all() ;
-        return $user = UserResource::collection($user);
-        if (auth()->user()->role == 'admin') {
 
+        if (auth()->user()->role == 'admin') {
+            $posts=Post::with('user:name,id')->get();
             // $posts = Post::paginate();
-            $post=Post::with('user:name,id')->get();
-            return $post;
-            $users = User::all() ;
-            // return $posts;
+        // return $posts;
 
             return view('posts.index', ['posts' => $posts]);
         }
@@ -65,11 +61,12 @@ class PostController extends Controller
     {
         // $validated=$request->all();
         $credential = $request->validated();
+
         auth()->user()->post()->create($credential);
         return  redirect()->route('posts.index');
     }
 
-    /**
+/**
      * Display the specified resource.
      *
      * @param  \App\Models\Post  $post

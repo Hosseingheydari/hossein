@@ -28,6 +28,7 @@ class StorePostRequest extends FormRequest
             'slug'=>'required',
             'content'=>'required',
             'status'=>'in:draft,published'
+            
 
         ];
 
