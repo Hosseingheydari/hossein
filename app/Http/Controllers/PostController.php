@@ -35,7 +35,6 @@ class PostController extends Controller
             return view('posts.index', ['posts' => $posts]);
         }
 
-        if (Gate::allows('posts.index')) {
             $posts = auth()->user()->post()->paginate();
             return view('posts.index', ['posts' => $posts]);
         }
